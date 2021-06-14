@@ -306,6 +306,7 @@
 				$('#content').html(data);
         $('#content_tree').show();
         pushParam();
+        $('filtre').trigger('click');
 			})
       .fail(function(data){
         $('#content').show();

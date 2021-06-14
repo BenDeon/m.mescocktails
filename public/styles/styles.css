@@ -1085,6 +1085,7 @@ input[type=search] {
 }
 .html {
   padding: 30px;
+  display: inline-table;
 }
 .html > h2 {
   text-align: center;
