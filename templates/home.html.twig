@@ -1,0 +1,322 @@
+{% extends "template.html.twig" %}
+{% block main %}
+  <div data-role="main" id="content" class="content">
+    {% include 'cocktails.list.html.twig' %}
+  </div>
+{% endblock %}
+{% block script %}
+<script>
+  $('#bt_menu').on('click', function(){
+    $("#menu").animate({width: '70%'}, 250);
+    $("filtre").fadeIn(250);
+  });
+
+  $('filtre').on('click', function(){
+    $("#menu").animate({width: 0}, 250);
+    $("filtre").fadeOut(250);
+  });
+
+  $('#recherche_text').on('focus', function(){
+    if($('#recherche_text').val() == ''){
+      $('#content').fadeOut("slow");
+    }
+  });
+
+  $('#recherche_text').on('blur', function(){
+    var rechercheVal = $('#recherche_text').val();
+    if(rechercheVal == ''){
+      $('#content').fadeIn("slow");
+    }
+    pushParam();
+  });
+
+  function recherche(){
+    var rechercheVal = $('#recherche_text').val();
+    var typeVal = $('#recherche_type').val();
+    if(rechercheVal == '' || rechercheVal.length > 1){
+      $.post({
+        url: "{{ path('HomeController.cocktailSearch') }}",
+        async : true,
+        data: {
+          _token: '{{ csrf_token('search-cocktail') }}',
+          recherche: rechercheVal,
+          type: typeVal
+        }
+      })
+      .done(function(data, statut){
+        if(rechercheVal.length > 1){
+          $('#content').show();
+        }
+        $('#content').html(data);
+      })
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+    }
+  }
+
+  $('#recherche_text').on('input keyup paste focus', function(){
+    recherche();
+  });
+
+  function pushParam(){
+    var param = new Array();
+    var rechercheVal = $('#recherche_text').val();
+    var origine = $('#recherche_origine').val();
+    var ingredients = $('#recherche_ingredients').val();
+    if(rechercheVal != ''){
+      param['recherche'] = "recherche="+rechercheVal;
+    }
+    if(origine != ''){
+      param['origine'] = "origine="+origine;
+    }
+    if(ingredients != ''){
+      param['ingredients'] = "ingredients="+ingredients;
+    }
+    if(Object.keys(param).length > 0){
+      paramString = Object.values(param).join('&');
+      window.history.pushState({},document.title,'?'+paramString);
+    }
+    else{
+      window.history.pushState({},document.title,window.location.pathname);
+    }
+  }
+  window.onload = pushParam;
+
+  {% if noMenu == false %}
+  $('.cat_menu > span').on('click', function(){
+    var toHide;
+    var next = $(this).next('ul');
+    var elem = $('.active_menu');
+    elem.toggleClass('active_menu');
+    if(elem.attr('id') != $(this).children('a').attr('id')){$(this).children('a').toggleClass('active_menu');}
+    $('.sub_menu').each(function(index){
+      var display = $(this).css('display');
+      if(display == 'block'){toHide = $(this);}
+    });
+    if(toHide && next.attr('id') != toHide.attr('id')){toHide.toggle('blind', 300, function(){next.toggle('blind', 300)});}
+    else{next.toggle('blind', 300);}
+  });
+
+  $('.cat_sub_menu > span').on('click', function(){
+    var toHide;
+    var next = $(this).next('ul');
+    var elem = $('.active_sub_menu');
+    elem.toggleClass('active_sub_menu');
+    if(elem.attr('id') != $(this).children('a').attr('id')){$(this).children('a').toggleClass('active_sub_menu');}
+    $('.sub_sub_menu').each(function(index){
+      var display = $(this).css('display');
+      if(display == 'block'){toHide = $(this);}
+    });
+    if(toHide && next.attr('id') != toHide.attr('id')){toHide.toggle('blind', 300, function(){next.toggle('blind', 300)});}
+    else{next.toggle('blind', 300);}
+  });
+
+  function recherche_ingredient(){
+		var rechercheIngredientVal = $('#recherche_ingredient_text').val();
+		if(rechercheIngredientVal.length > 1){
+			$.post({
+				url: "{{ path('HomeController.ingredientSearch') }}",
+        async : true,
+				data: {
+          _token: '{{ csrf_token('search-ingredient') }}',
+          recherche_ingredient: rechercheIngredientVal
+        }
+			})
+			.done(function(data, statut){
+        if(rechercheIngredientVal.length > 1){$('#recherche_ingredient_list').show();}
+				$('#recherche_ingredient_list').html(data);
+			})
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+		}
+    else if(rechercheIngredientVal == ''){
+      $('#recherche_ingredient_list').empty();
+      $('#recherche_ingredient_list').hide();
+    }
+  }
+	$('#recherche_ingredient_text').on('input keyup paste focus', function(){
+    recherche_ingredient();
+	});
+
+  var recherche_ingredients = $('#recherche_ingredients').val()!=''?$('#recherche_ingredients').val().split(','):[];
+
+  $('#recherche_ingredient_list').on('click', 'li', function(){
+    if($('#ingredient_'+this.id).length == 0){
+      var ingredientId = this.id;
+			var rechercheVal = $('#recherche_text').val();
+			var typeVal = $('#recherche_type').val();
+      $('#ingredients_selected').append('<li id="ingredient_'+ this.id +'">'+ this.innerHTML + '</li>');
+      $('#recherche_ingredient_list').empty();
+      $('#recherche_ingredient_list').hide();
+      $('#recherche_ingredient_text').val('');
+			$.post({
+				url: "{{ path('HomeController.ingredientAdd') }}",
+        async : true,
+				data: {
+          _token: '{{ csrf_token('add-ingredient') }}',
+          ajout_ingredient: this.id
+        }
+			})
+			.done(function(data, statut){
+        recherche_ingredients.push(ingredientId);
+        $('#recherche_ingredients').val(recherche_ingredients.toString());
+  			$.post({
+  				url: "{{ path('HomeController.cocktailSearch') }}",
+          async : true,
+  				data: {
+            _token: '{{ csrf_token('search-cocktail') }}',
+            recherche: rechercheVal,
+            type: typeVal
+          }
+  			})
+  			.done(function(data, statut){
+            if(rechercheVal.length > 1){$('#content_tree').show();}
+  					$('#content').html(data);
+            pushParam();
+  				})
+        .fail(function(data){
+          $('#content').show();
+          $('#content').html(data.responseText);
+        });
+			})
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+    }
+  });
+
+  $('#ingredients_selected').on('click', function(e){
+		var rechercheVal = $('#recherche_text').val();
+		var typeVal = $('#recherche_type').val();
+    var ingredientId = e.target.id.split('_')[1];
+		$.post({
+			url: "{{ path('HomeController.ingredientDel') }}",
+      async : true,
+			data: {
+        _token: '{{ csrf_token('del-ingredient') }}',
+        suppression_ingredient: ingredientId
+      }
+		})
+		.done(function(data, statut){
+      $(e.target).remove();
+      recherche_ingredients = recherche_ingredients.filter(ingredient => ingredient !== ingredientId);
+      $('#recherche_ingredients').val(recherche_ingredients.toString());
+			$.post({
+				url: "{{ path('HomeController.cocktailSearch') }}",
+        async : true,
+				data: {
+          _token: '{{ csrf_token('search-cocktail') }}',
+          recherche: rechercheVal,
+          type: typeVal
+        }
+			})
+			.done(function(data, statut){
+        if(rechercheVal.length > 1){$('#content_tree').show();}
+				$('#content').html(data);
+        pushParam();
+			})
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+		})
+    .fail(function(data){
+      $('#content').show();
+      $('#content').html(data.responseText);
+    });
+  });
+
+  $('#sub_menu_origines').on('click', 'li', function(){
+		var rechercheVal = $('#recherche_text').val();
+		var typeVal = $('#recherche_type').val();
+    var origine = this.id;
+    var origineRef = $(this).attr('ref');
+    var origineId = origine.split('_')[1];
+		$.post({
+			url: "{{ path('HomeController.origineManage') }}",
+      async : true,
+			data: {
+        _token: '{{ csrf_token('manage-origine') }}',
+        origine: origineId
+      }
+		})
+		.done(function(data, statut){
+      if($('.selected_origine').attr('id') != origine){
+        $('.selected_origine').toggleClass('selected_origine');
+        $('#recherche_origine').val(origineRef);
+      }
+      else{
+        $('#recherche_origine').val('');
+      }
+      $('#'+origine).toggleClass('selected_origine');
+			$.post({
+				url: "{{ path('HomeController.cocktailSearch') }}",
+        async : true,
+				data: {
+          _token: '{{ csrf_token('search-cocktail') }}',
+          recherche: rechercheVal,
+          type: typeVal
+        }
+			})
+			.done(function(data, statut){
+        if(rechercheVal.length > 1){$('#content_tree').show();}
+				$('#content').html(data);
+        pushParam();
+			})
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+		})
+    .fail(function(data){
+      $('#content').show();
+      $('#content').html(data.responseText);
+    });
+  });
+
+  $('#site_title').on('click', function(){
+		var typeVal = $('#recherche_type').val();
+		$.post({
+			url: "{{ path('HomeController.searchReset') }}",
+      async : true,
+			data: {
+        _token: '{{ csrf_token('search-reset') }}'
+      }
+		})
+		.done(function(data, statut){
+      $('.selected_origine').toggleClass('selected_origine');
+      $('#ingredients_selected').empty();
+      $('#recherche_text').val('');
+      $('#recherche_origine').val('');
+      $('#recherche_ingredients').val('');
+			$.post({
+				url: "{{ path('HomeController.cocktailSearch') }}",
+        async : true,
+				data: {
+          _token: '{{ csrf_token('search-cocktail') }}',
+          type: typeVal
+        }
+			})
+			.done(function(data, statut){
+				$('#content').html(data);
+        $('#content_tree').show();
+        pushParam();
+			})
+      .fail(function(data){
+        $('#content').show();
+        $('#content').html(data.responseText);
+      });
+		})
+    .fail(function(data){
+      $('#content').show();
+      $('#content').html(data.responseText);
+    });
+  });
+  {% endif %}
+</script>
+{% endblock %}

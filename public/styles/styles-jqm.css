@@ -1,0 +1,57 @@
+header, main, footer{
+  box-sizing: border-box;
+  width:100%;
+}
+header, footer{
+  height:1.3in;
+  min-height:1.3in;
+}
+header{
+	background-image: url('../images/index_cocktail_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-bottom:1px solid #000;
+}
+
+.head{
+  display:table;
+  width:100%;
+  height:100%;
+}
+
+.head .logo{
+  width:100%;
+  height:100%;
+  background-image:url('../images/logo_mescocktails.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.head > div{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:auto;
+  height:100%;
+}
+.head > div:first-child, .head > div:last-child{
+  width:20%;
+}
+.head > div:first-child{
+  text-align:left;
+}
+.head > div:last-child{
+  text-align:right;
+}
+
+.ui-icon-bars::after, .bt_recherche::after{
+  width:1.5in !important;
+  height:1in !important;
+  background-size: 0.8in !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-color:rgba(0,0,0,0) !important;
+  border:0px !important;
+  cursor:pointer !important;
+}

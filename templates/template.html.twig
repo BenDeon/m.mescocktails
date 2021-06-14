@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name=”viewport” content=”initial-scale=1, maximum-scale=1, width=device-width, height=device-height”>
+        <title>Mes Cocktails Mobile !{% block title %}{% endblock %}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link href="{{ asset('styles/styles.css') }}" rel="stylesheet"/>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BK8KMDL92"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8BK8KMDL92');
+        </script>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+      <filtre></filtre>
+      {%if noMenu == false %}
+        {% include 'menu.html.twig' %}
+      {%endif%}
+      {% include 'header.html.twig' %}
+      <main>
+        {% block main %}{% endblock %}
+      </main>
+      {%if noFooter is not defined %}
+        {% include 'footer.html.twig' %}
+      {% endif %}
+      {% block script %}{% endblock %}
+    </body>
+</html>

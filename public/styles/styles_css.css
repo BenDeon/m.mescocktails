@@ -1,0 +1,532 @@
+html{
+  box-sizing: border-box;
+  height:100%;
+  min-height:100%;
+  text-size-adjust: none;
+}
+body{
+  box-sizing: border-box;
+  height:100%;
+  min-height:100%;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:2vh;
+	background: #232323;
+	color:#E8E8E8;
+	margin:0px;
+  padding:0px;
+  position:fixed;
+  box-sizing:border-box;
+  z-index:0;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center 18vh;
+}
+filtre{
+  position: fixed;
+  z-index:15;
+  background: rgba(0,0,0,0.5);
+  width:100%;
+  height:100%;
+  padding:0.1in;
+  display:none;
+  content: " ";
+}
+header, main, footer{
+  box-sizing: border-box;
+  width:100vw;
+}
+header{
+  height:11%;
+  min-height:11%;
+  background: rgb(111,39,120);
+  background: linear-gradient(0deg, rgba(111,39,120,1) 0%, rgba(111,39,120,1) 50%, rgba(174,90,184,1) 50%, rgba(174,90,184,1) 100%);
+  border-bottom:1px solid #000;
+}
+main{
+  height:82%;
+  min-height:82%;
+  overflow:hidden;
+}
+footer{
+  height:7%;
+  min-height:7%;
+}
+h2{
+  font-size:0.4in;
+  margin-bottom:5px;
+  margin-top:5px;
+}
+#menu{
+  position:fixed;
+  z-index:20;
+  width:0px;
+  overflow: hidden;
+  transition: max-width 0.2s ease-out;
+  background-color: #232323;
+  height:100%;
+  font-size:0.5in;
+  border-right:1px solid #000;
+}
+#menu > .menu_header{
+  background-color:#6f2778;
+  background-image:url('../images/logo.png');
+  background-repeat:no-repeat;
+  background-size: contain;
+  background-origin: content-box;
+  padding:10px;
+  color:#FFF;
+  border-bottom:0.1in solid #a753b1;
+}
+#menu > .menu_header > h1{
+  margin:0px;
+  padding:0px;
+  padding-left:60px;
+  font-size:0.4in;
+  font-weight:normal;
+}
+#menu > h3{
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-weight:normal;
+  font-size:0.4in;
+  margin:0;
+  padding:0.3in 0.1in 0.3in 1in;
+  vertical-align:middle;
+  border-top:0.1in solid #6A6A6A;
+  border-bottom:0.01in solid #6A6A6A;
+  background-repeat: no-repeat;
+  background-position:left 0.2in center;
+  background-size:0.6in;
+}
+#menu > h3 > span{
+  display:block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right center;
+}
+#menu > h3:first-of-type{
+  border-top:none;
+}
+#menu a{
+  box-sizing: border-box;
+  display:block;
+  white-space: nowrap;
+  width:100%;
+  font-size:0.4in;
+  background-color:transparent;
+  background-repeat: no-repeat;
+  background-position:left 0.2in center;
+  background-size:0.6in;
+  text-align:left;
+  border:none;
+  border-bottom:0.01in solid #6A6A6A;
+  color:#FFF;
+  text-decoration: none;
+  cursor:pointer;
+}
+#menu > .sub_menu{
+  display:none;
+}
+#menu > .sub_menu > h4{
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-weight:normal;
+  font-size:0.4in;
+  margin:0;
+  padding:0.3in 0.1in 0.3in 1.7in;
+  vertical-align:middle;
+  border-top:0.01in solid #6A6A6A;
+  border-bottom:0.01in solid #6A6A6A;
+  background-repeat: no-repeat;
+  background-position:left 0.9in center;
+  background-size:0.6in;
+  cursor:pointer;
+}
+#menu > .sub_menu > h4 > span{
+  display:block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right center;
+}
+#menu > .sub_menu > a{
+  padding:0.3in 1.7in;
+  background-position:left 0.9in center;
+}
+#menu > .sub_menu > .sub_sub_menu{
+  display:none;
+}
+#menu > .cat_menu{
+  background-color:rgba(0,0,0,0.2);
+  cursor:pointer;
+}
+#menu .active_menu, .active_sub_menu{
+  background-image:url('../images/fermer.png') !important;
+}
+#menu .inactive_menu, .inactive_sub_menu{
+  background-image:url('../images/ouvrir.png');
+}
+.head{
+  box-sizing: border-box;
+  display:table;
+  width:100vw;
+  height:100%;
+}
+.head > div{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:auto;
+  height:100%;
+}
+.head > div:first-child{
+  width:20vw;
+}
+.head > div:first-child{
+  text-align:left;
+}
+.head > div:last-child{
+  text-align:right;
+  padding-right:20vw;
+}
+.head > div > button{
+  width:1.5in;
+  height:1in;
+}
+.head > div > form{
+  margin:0;
+  padding:0;
+  width:100%;
+}
+.head .logo{
+  width:100vw;
+  height:100%;
+  background-image:url('../images/logo_mescocktails.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.foot{
+  box-sizing: border-box;
+  display:table;
+  width:100vw;
+  height:100%;
+  background:linear-gradient(to bottom, #282828 0%,#232323 50%,#1e1e1e 100%);
+  padding:0;
+  margin:0;
+}
+.foot > li{
+  box-sizing: border-box;
+  display:table-cell;
+  height:100%;
+  width:25vw;
+  cursor:pointer;
+  font-size:2vh;
+}
+.foot > li > a{
+  display:block;
+  text-decoration: none;
+  text-align: center;
+  color:#E8E8E8;
+  line-height:7vh;
+}
+.foot > li[active] > a{
+  font-weight:bold;
+}
+.recherche{
+}
+.recherche > div{
+  display:table-cell;
+  height:100%;
+  vertical-align: middle;
+  text-align:right;
+}
+.recherche > div:first-child{
+  width:80%;
+}
+input[type=search]{
+  box-sizing: content-box;
+  width:100%;
+  height:5vh;
+  font-size:3vh;
+	border: 1px solid #6A6A6A;
+	background-color: #000000;
+	border-radius: 3px;
+	color: #FFF;
+  background-image:url('../images/loupe.png');
+  background-repeat: no-repeat;
+  background-position:left 6px center;
+  background-size:5vh;
+  background-clip:border-box;
+  vertical-align: middle;
+  padding-left:6vh;
+}
+#recherche_ingredient > input[type=search]{
+  font-size:0.4in;
+  box-sizing:border-box;
+}
+#ingredients_selected{
+  margin:0px;
+}
+#recherche_ingredient_list{
+  margin:0px;
+  background-color:#000;
+  border:0.01in solid #6A6A6A;
+}
+#recherche_ingredient_list > li{
+  list-style: none;
+  margin:0;
+  padding:0;
+  font-size:0.3in;
+  line-height:0.6in;
+  cursor:pointer;
+}
+#recherche_ingredient_list > li:hover{
+  background-color:#010101;
+}
+.bt_menu, .bt_recherche{
+  background-image:url('../images/menu.png');
+  background-size: 7vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color:rgba(0,0,0,0);
+  border:0px;
+  cursor:pointer;
+}
+.bt_recherche{
+  background-image:url('../images/loupe.png');
+}
+.bt_close{
+  box-sizing:content-box;
+  width:0.8in;
+  height:0.8in;
+  font-size:0.6in;
+	border: 1px solid #6A6A6A;
+	background-color: #000000;
+	border-radius: 3px;
+	color: #FFF;
+  padding:7px;
+}
+.bt_close_menu{
+  box-sizing:content-box;
+  width:0.8in;
+  height:0.8in;
+  font-size:0.6in;
+	background-color: transparent;
+	color: #6A6A6A;
+  border:0;
+  padding:7px;
+  cursor:pointer;
+}
+._close_menu{}
+.content{
+  box-sizing: border-box;
+  height:100%;
+  overflow-y:auto;
+  overflow-x:inherit;
+}
+#cocktail_img_spacer{
+  display:block;
+  height:auto;
+  min-height:auto;
+}
+#cocktail_img_spacer > img{
+  display:block;
+  height:auto;
+  width:100%;
+  opacity:0;
+}
+.ficheTitle{
+  box-sizing: border-box;
+  width:100%;
+  margin-top:0vh;
+  background-color:#000;
+  color:#FFF;
+  text-align:center;
+  font-size:4vh;
+  padding:1vh;
+  margin-bottom:0;
+  height:9%;
+}
+.ficheSubTitle{
+  box-sizing: border-box;
+  width:100%;
+  background-color:#272727;
+  color:#FFF;
+  text-align:center;
+  padding:0.2in;
+  margin-bottom:0;
+}
+.fiche{
+  box-sizing: border-box;
+  width:100%;
+  height:91%;
+  margin:0vh;
+}
+.fiche > div::nth-child(n+0){
+  box-sizing: border-box;
+  width:100%;
+  margin:0;
+  background-color:rgba(23,23,23,0.7);
+  padding:0.2in;
+  color:#FFF;
+  font-size:0.5in;
+  word-wrap: break-word;
+  margin-top:0.05in;
+}
+.fiche > #accroche{
+  height:auto;
+  min-height:auto;
+  text-align: center;
+  font-style: italic;
+}
+.fiche > #recette{
+  background-color:#000;
+  width:100%;
+  overflow:hidden;
+}
+.fiche > #recette > #infos,
+.fiche > #recette > #ingredients,
+.fiche > #recette > #ustensiles,
+.fiche > #recette > #instructions{
+  display:table;
+  width:100%;
+}
+.fiche > #recette > #infos > div{
+  display:table-cell;
+  vertical-align: top;
+}
+.fiche > #recette > #infos > div:last-child{
+  padding-left:0.5in;
+  width:100%;
+}
+.fiche > #recette > #infos > div > img{
+  height:1.2in;
+}
+.fiche > #recette > #ingredients,
+.fiche > #recette > #ustensiles,
+.fiche > #recette > #instructions{
+  box-sizing: border-box;
+  background-color:rgba(0,0,0,0.3);
+  padding:0.2in;
+}
+.fiche > #recette > #ingredients > div{
+  display:table-row;
+}
+.fiche > #recette > #ingredients > div > div{
+  display:table-cell;
+  vertical-align: top;
+  width:50%;
+}
+.fiche > #recette > #ustensiles > div{
+  display:table-cell;
+  text-align:center;
+  vertical-align: bottom;
+}
+.fiche > #recette > #ustensiles > div > img{
+  height:2in;
+}
+.list{
+  background:#161616;
+  margin:0;
+  padding:0;
+}
+.list > li{
+  overflow: hidden;
+  list-style: none;
+  margin:0;
+  padding:0;
+  border-bottom:8px solid #000;
+  background-color:#1E1E1E;
+  width:100%;
+}
+.list > li:last-child{
+  border:none;
+}
+.list > li h2 > a{
+  color:#E8E8E8;
+  text-decoration:none;
+}
+.list > li > div{
+  display:table-cell;
+}
+.list > li > div:first-child{
+  width:25%;
+  background-repeat:no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.list > li > div:first-child > img{
+  width:100%;
+}
+.list > li > div:last-child{
+  padding:0 5vw;
+  vertical-align: top;
+}
+.list > li > div:last-child > span{
+  font-size:0.25in;
+  font-style: italic;
+  color:#B0B0B0;
+}
+.bg_all{
+  background-color:#232323;
+}
+.borderT_all{
+  border-top:0.1in solid #232323;
+}
+.foot_ld{
+  background:linear-gradient(to bottom, #2358af 0%,#1f509e 50%,#1c468c 100%);
+}
+.bg_ld{
+  background-color:#1f509e;
+}
+.borderT_ld{
+  border-top:0.1in solid #2358af;
+}
+.foot_sd{
+  background:linear-gradient(to bottom, #009534 0%,#007f2c 50%,#006a25 100%)
+}
+.bg_sd{
+  background-color:#007f2c;
+}
+.borderT_sd{
+  border-top:0.1in solid #009534;
+}
+.foot_sa{
+  background:linear-gradient(to bottom, #d56608 0%,#d56608 50%,#c05800 100%)
+}
+.bg_sa{
+  background-color:#d56608;
+}
+.borderT_sa{
+  border-top:0.1in solid #d56608;
+}
+.img_compte{
+  background-image:url('../images/pictouser.png');
+}
+.img_recettes{
+  background-image:url('../images/recettes.png');
+}
+.img_cocktail_tous{
+  background-image:url('../images/cocktail_all_a.png');
+}
+.img_cocktail_ld{
+  background-image:url('../images/cocktail_ld_a.svg');
+}
+.img_cocktail_sa{
+  background-image:url('../images/cocktail_sa_a.svg');
+}
+.img_cocktail_sd{
+  background-image:url('../images/cocktail_sd_a.svg');
+}
+.img_filtre{
+  background-image:url('../images/filtre.png');
+}
+.img_ingredients{
+  background-image:url('../images/ingredients.png');
+}
+.img_cocktail_fiche{
+min-height:100vw;
+background-size: contain;
+background-repeat: no-repeat;
+position:absolute;
+}

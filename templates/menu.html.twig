@@ -1,0 +1,70 @@
+<div id="menu">
+  <div class="menu_header"><h1><a id="site_title">MesCocktails.fr</a></h1></div>
+  <ul>
+    <li class="cat_menu">
+      <span class="img_recettes">
+        <a id="label_recettes" class="inactive_menu active_menu">Recettes</a>
+      </span>
+      <ul id="sub_menu_recettes" class="sub_menu" style="display:block;">
+        <li><span class="img_cocktail_tous"><a href="{{ path('HomeController.index') }}">Toutes</a></span></li>
+        <li><span class="img_cocktail_ld"><a href="{{ path('HomeController.longDrink') }}">Long Drink</a></span></li>
+        <li><span class="img_cocktail_sd"><a href="{{ path('HomeController.shortDrink') }}">Short Drink</a></span></li>
+        <li><span class="img_cocktail_sa"><a href="{{ path('HomeController.sansAlcool') }}">Sans Alcool</a></span></li>
+      </ul>
+    </li>
+    <li class="cat_menu">
+      <span class="img_filtre">
+        <a id="label_filtrer" class="inactive_menu">Filtrer</a>
+      </span>
+      <ul id="sub_menu_filtres" class="sub_menu">
+        <li class="cat_sub_menu">
+          <span class="img_ingredients">
+            <a id="label_ingredients" class="inactive_sub_menu">Ingrédients</a>
+          </span>
+          <ul id="sub_menu_ingredients" class="sub_sub_menu" style="display:none;">
+            <li>
+              <div id="recherche_ingredient"><input type="search" id="recherche_ingredient_text" placeholder="Rechercher un ingrédient" autocomplete="off" value="" /></div>
+            </li>
+            <li>
+              <ul id="ingredients_selected">
+                {%if recherche_ingredients is defined %}
+                  {% for recherche_ingredient in recherche_ingredients %}
+                    <li id="ingredient_{{ recherche_ingredient.id }}">{{ recherche_ingredient.nom }}</li>
+                  {% endfor %}
+                {%endif%}
+              </ul>
+            </li>
+            <li>
+              <ul id="recherche_ingredient_list" style="display:none;"></ul>
+            </li>
+          </ul>
+        </li>
+        <li class="cat_sub_menu">
+          <span class="img_origines">
+            <a id="label_origines" class="inactive_sub_menu">Origine</a>
+          </span>
+          <ul id="sub_menu_origines" class="sub_sub_menu" style="display:none;">
+            {% for origine in origines %}
+              <li id="origine_{{ origine.id }}" ref="{{ origine.code }}" {% if recherche_origine and recherche_origine.code == origine.code %}class="selected_origine"{% endif %}>
+                <span style="background-image:url('images/pays/{{ origine.code }}.png')">{{ origine.nom }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="cat_menu">
+      <span class="img_informations">
+        <a id="label_informations" class="inactive_menu">Infos légales</a>
+      </span>
+      <ul id="sub_menu_informations" class="sub_menu">
+        <li><span><a href="{{ path('HomeController.mentionsLegales') }}">Mentions légales</a></span></li>
+        <li><span><a href="{{ path('HomeController.conditionsUtilisation') }}">Conditions d'utilisation</a></span></li>
+      </ul>
+    </li>
+    <li id="PromoDesktop">
+      <div><div><img src="images/illu_mesrecettes.jpg" /></div></div>
+      <div>MesCocktails sur votre ordinateur c'est encore plus de fun !<br />Gérez vos ingrédients disponibles et consultez en un tour de main les recettes que vous pouvez réaliser, organisez vos favoris et ajoutez vos propres recettes !</div>
+    </li>
+  </ul>
+</div>

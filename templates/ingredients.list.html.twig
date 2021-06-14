@@ -1,0 +1,7 @@
+{% if ingredients %}
+  {% for ingredient in ingredients %}
+    <li id="{{ ingredient.id }}">{{ ingredient.nom }}</li>
+  {% endfor %}
+{% else %}
+  <li>Aucun ingrédient correspondant au terme "{{ recherche }}" n'a été trouvé.</li>
+{% endif %}

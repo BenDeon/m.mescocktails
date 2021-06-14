@@ -1,0 +1,36 @@
+{% extends "template.html.twig" %}
+{% block title %} - Mentions légales{% endblock %}
+{% block main %}
+  <div data-role="main" id="content" class="content html">
+    <h2>Mentions légales du site internet Mes Cocktails</h2>
+    <h4>Alias de domaine</h4>
+    <div>m.mescocktails.fr m.mescocktails.com</div>
+    <h4>Directeur de publication</h4>
+    <div>DEON Benjamin</div>
+    <h4>Développement</h4>
+    <div>DEON Benjamin </div>
+    <h4>Design</h4>
+    <div>RIGAUX Olivier<br />DEON Benjamin </div>
+    <h4>Hébergement du site Mes Cocktails</h4>
+    <div>OVH SAS au capital de 500 k€<br />
+      RCS Roubaix - Tourcoing 424 761 419 00011<br />
+      Code APE 721Z<br />
+      N&deg; TVA : FR 22-424-761-419-00011<br />
+      Siège social : 140 Quai du Sartel<br />
+      59100 Roubaix - France</div>
+    <h4>Crédits photos</h4>
+    <div>RIGAUX Olivier</div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    $('#bt_back').on('click', function(){
+      history.back();
+    });
+
+    var headerH = $('header').height();
+    $('main').css({
+      'height':'calc(100% - '+ headerH +'px)'
+    });
+  </script>
+{% endblock %}

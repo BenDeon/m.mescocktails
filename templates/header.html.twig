@@ -1,0 +1,19 @@
+<header>
+  <div>
+    {%if noMenu == false %}
+    <button id="bt_menu"></button>
+    {% endif %}
+    {%if noBackToList is not defined %}
+    <button id="bt_back"></button>
+    {% endif %}
+  </div>
+  <div id="recherche">
+    {%if noSearch is not defined %}
+    <input type="hidden" id="recherche_type" value="{{ type.code }}" />
+    <input type="hidden" id="recherche_origine" value="{% if recherche_origine %}{{ recherche_origine['code'] }}{%endif%}" />
+    <input type="hidden" id="recherche_ingredients" value="{% for key in recherche_ingredients|keys %}{{ key }}{%if not loop.last %},{%endif%}{%endfor%}" />
+    <input type="search" id="recherche_text" placeholder="Rechercher un cocktail" autocomplete="off" value="{{ recherche }}" />
+    {% endif %}
+  </div>
+  <div></div>
+</header>

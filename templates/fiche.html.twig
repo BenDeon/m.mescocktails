@@ -1,0 +1,128 @@
+{% extends "template.html.twig" %}
+{% block title %} - {{cocktail.nom}}{% endblock %}
+{% block head %}
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org/",
+    "@type": "Recipe",
+    "name": "{{ cocktail.nom }}",
+    {% if cocktailDetails.img %}
+    "image": "{{ asset('images/cocktails/') ~ cocktailDetails.img }}",
+    {% endif %}
+    "author": {
+      "@type": "Organization",
+      "name": "Mes Cocktails"
+    },
+    "description": "{{ cocktailDetails.accroche }}",
+    "recipeCategory": "Cocktail",
+    "recipeCuisine": "{{ cocktailDetails.origine }}",
+    "recipeIngredient": [
+      {% for ingredient in ingredients %}
+      "{{ ingredient.quantite }} {{ ingredient.mesure }} {{ ingredient.nom }}",
+      {% endfor %}
+    ],
+    "recipeInstructions": [
+      {% for instruction in cocktailDetails.detail|split('\n\n') %}
+      {
+      "@type":"HowToStep",
+      "text": "{{ instruction }}"
+      },
+      {% endfor %}
+    ]
+  }
+  </script>
+{% endblock %}
+{% block main %}
+  <div id="ficheTitle">
+    <h1>{{ cocktail.nom }}</h1>
+  </div>
+  <div data-role="main" id="content" class="content fiche">
+    {% if cocktailDetails.img %}
+    <div id="cocktail_img_spacer">
+      <img id="cocktail_img_spacer_img" src="{{ asset('images/cocktails/') ~ cocktailDetails.img }}" />
+    </div>
+    {% endif %}
+    <div id="recette_conteneur">
+      {% if cocktailDetails.accroche %}
+      <div id="accroche" class="bg_{{ type.code }}">{{ cocktailDetails.accroche }}</div>
+      {% endif %}
+      <div id="recette">
+        <div id="infos">
+          <div>
+            {% if cocktailDetails.origine %}
+            <img src="{{ asset('images/pays/') ~ cocktailDetails.origine ~ '.png' }}" />
+            {% else %}
+            <img src="{{ asset('images/verres/cocktail_') ~ cocktail.typec ~ '_a.svg' }}" />
+            {% endif %}
+          </div>
+          <div>{{ type.nom|title  }}<br />{% if pays %}{{ pays.nom }}{% endif %}</div>
+        </div>
+        <div class="ficheSubTitle">Ingrédients</div>
+        <div id="ingredients">
+          {% for ingredient in ingredients %}
+          <div>
+            <div>{{ ingredient.nom }}</div>
+            <div>
+              {% if ingredient.quantite %}
+                {{ ingredient.quantite ~ ' ' ~ ingredient.mesure }}
+              {% else %}
+                {{ ingredient.mesure|capitalize }}
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+          {% if cocktailDetails.glace %}
+          <div>
+            <div>Glaçons</div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="ficheSubTitle">Ustensiles / Verre</div>
+        <div id="ustensiles">
+          {% if cocktailDetails.methode > 1 %}
+          <div><img src="{{ asset('images/methodes/methode_' ~ cocktailDetails.methode ~ '.png') }}"><br /><span>{{ methode }}</span></div>
+          {% endif %}
+          <div><img src="{{ asset('images/verres/verre_' ~ cocktailDetails.verre ~ '.svg') }}"><br /><span>{{ verre }}</span></div>
+        </div>
+        <div class="ficheSubTitle">Instructions</div>
+        <div id="instructions">
+          <div>{{ cocktailDetails.detail }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    $('#bt_back').on('click', function(){
+      history.back();
+    });
+  function initView(){
+    var headerH = $('header').height();
+    $('main').css({
+      'height':'calc(100% - '+ headerH +'px)'
+    });
+    {% if cocktailDetails.img %}
+    if(window.innerHeight > window.innerWidth){
+      $('main').css({
+        'backgroundImage':"url({% if cocktailDetails.img %}{{ asset('images/cocktails/') ~ cocktailDetails.img }}{% endif %})"
+      });
+      $('#content').attr('style','');
+      var imgHeight = $('#cocktail_img_spacer').height('auto');
+      var imgHeight = $('#cocktail_img_spacer').height();
+      var contentHeight = $('#content').height();
+      $('#cocktail_img_spacer').height(0);
+      $('#content').attr('style','margin-top: '+(imgHeight/2)+'px;padding-top: '+(imgHeight/2)+'px;height: '+(contentHeight-(imgHeight/2))+'px;');
+    }
+    else{
+      $('main').css({'backgroundImage':""});
+      $('#content').attr('style','');
+      $('#cocktail_img_spacer').height('auto');
+    }
+    {% endif %}
+  };
+  window.onload = initView;
+  window.onresize = initView;
+
+</script>
+{% endblock %}

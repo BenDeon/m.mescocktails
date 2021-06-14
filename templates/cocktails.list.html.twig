@@ -1,0 +1,49 @@
+{% if cocktails %}
+  <div id="cocktailsCount">Cocktail{% if cocktails|length > 1 %}s{% endif %} trouvé{% if cocktails|length > 1 %}s{% endif %} : {{ cocktails|length }}</div>
+  <ul id="content_tree" class="list">
+    {% for cocktail in cocktails %}
+    <li>
+      {% if cocktail.img %}
+        <div style="background-image:url({{ asset('images/cocktails/') ~ cocktail.img }})">
+          <a href="{{ url('FicheController.index',{'cocktail_id': cocktail.id,'cocktail': cocktail.nom|url_encode }) }}"><img src="{{ asset('images/cocktails/cover.png')}}" /></a>
+        </div>
+      {% else %}
+        <div style="background-image:url({{ asset('images/verres/verre_') ~ cocktail.verre ~ '_' ~ cocktail.typec ~ '.png' }})">
+          <a href="{{ url('FicheController.index',{'cocktail_id': cocktail.id,'cocktail': cocktail.nom|url_encode }) }}"><img src="{{ asset('images/cocktails/cover.png')}}" /></a>
+        </div>
+      {% endif %}
+      <div>
+        <h2><a href="{{ url('FicheController.index',{'cocktail_id': cocktail.id,'cocktail': cocktail.nom|url_encode }) }}">{{ cocktail.nom }}</a></h2>
+        <span>
+        {{ cocktail.ingredients }}
+        </span>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div id="NoResult">
+    <h3>Aucun cocktail correspondant à votre recherche n'a été trouvé.</h2>
+    <h4>Vos critères :</h4>
+    <ul>
+    {% if recherche %}
+      <li>Nom : {{ recherche }}</li>
+    {% endif %}
+    {% if type %}
+      <li>Type de cocktail : {{ type.nom }}</li>
+    {% endif %}
+    {% if recherche_ingredients %}
+      <li>Ingrédients :
+      {% for ingredient in recherche_ingredients %}
+        {{ ingredient.nom }}
+        {% if not loop.last %},{% endif %}
+      {% endfor %}
+      </li>
+    {% endif %}
+    {% if recherche_origine %}
+      <li>Origine : {{ recherche_origine.nom }}</li>
+    {% endif %}
+    </ul>
+    <div>Essayez d'étendre votre recherche.</div>
+  </div>
+{% endif %}

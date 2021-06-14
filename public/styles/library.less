@@ -1,0 +1,55 @@
+@images: '../images';
+@background-color: {
+  original : #232323;
+  dark: #000;
+  headers1 : #6F2778;
+  headers2 : #AE5AB8;
+}
+@color: {
+  ld : #1f509e;
+  sd : #007f2c;
+  sa: #d56608;
+}
+@border: {
+  light : #6A6A6A;
+  dark : #000;
+}
+@text-color: {
+  original : #E8E8E8;
+  title : #FFF;
+}
+.font-properties(@size: 48px, @line-height: 48px, @style: normal){
+  font-size: @size;
+  line-height: @line-height;
+  font-style: @style;
+}
+.font-portrait(){
+  .max{.font-properties;}
+  .txt{.font-properties(@size: 28px, @line-height: 32px);}
+  .h1{.font-properties;}
+  .h2{.font-properties(@size: 42px, @line-height: 42px);}
+  .h3{.font-properties(@size: 38px, @line-height: 38px);}
+  .h4{.font-properties(@size: 32px, @line-height: 32px);}
+  .caption{.font-properties(@size: 22px, @line-height: 32px, @style: italic);}
+}
+.font-landscape(){
+  .max{.font-properties(@size: 32px, @line-height: 32px);}
+  .txt{.font-properties(@size: 18px, @line-height: 22px);}
+  .h1{.font-properties(@size: 32px, @line-height: 32px);}
+  .h2{.font-properties(@size: 26px, @line-height: 26px);}
+  .h3{.font-properties(@size: 20px, @line-height: 20px);}
+  .h4{.font-properties(@size: 18px, @line-height: 18px);}
+  .caption{.font-properties(@size: 14px, @line-height: 14px, @style: italic);}
+}
+.element-size(@value-height: 100%, @value-width: 100%){
+  height: @value-height;
+  min-height: @value-height;
+  width: @value-width;
+  min-width: @value-width;
+}
+.background-properties(@repeat: no-repeat, @size: contain, @position: center, @origin: inherit){
+  background-repeat: @repeat;
+  background-size: @size;
+  background-position: @position;
+  background-origin: @origin;
+}
