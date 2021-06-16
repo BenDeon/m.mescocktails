@@ -1085,7 +1085,6 @@ input[type=search] {
 }
 .html {
   padding: 30px;
-  display: inline-table;
 }
 .html > h2 {
   text-align: center;
@@ -1093,18 +1092,18 @@ input[type=search] {
 .html > h4 {
   margin-top: 30px;
 }
-.html > div {
-  margin: 10px 0px;
+.html > p {
+  margin: 30px 0px;
 }
 @media all and (orientation: portrait) {
-  .html > div {
+  .html > p {
     font-size: 28px;
     line-height: 32px;
     font-style: normal;
   }
 }
 @media all and (orientation: landscape) {
-  .html > div {
+  .html > p {
     font-size: 18px;
     line-height: 22px;
     font-style: normal;
